@@ -45,8 +45,6 @@ for (i in 1:numberOfObservations) {
 dataMergedSet <- cbind(subjectMergedSet, 
                        activitiesMergedSet, observationsMergedSet)
 
-################################################################################
-# Adding variable names in the merged data set(task 3)
 names(dataMergedSet) <- c("Subject", "Activity",
                           as.character(listOfVariables[,2]))
 
@@ -74,6 +72,21 @@ summarizeData <- aggregate(meanAndStdsDataSet[,3:81],
 # Data is sorted first based on subject and next on activity.
 summarizeData <- summarizeData[order(summarizeData$'Subject number'),]
 summarizeData[,1] <- as.factor(summarizeData[,1])
+
+################################################################################
+# Adding suitable variable names in the merged data set(task 3)
+
+#rewritting variable names to fit standerds
+names(summarizeData) <- tolower(names(summarizeData))
+names(summarizeData) <- sub("\\()","", names(summarizeData))
+names(summarizeData) <- sub(" ","", names(summarizeData))
+names(summarizeData) <- gsub("-","", names(summarizeData))
+names(summarizeData) <- sub("acc","acceleration", names(summarizeData))
+names(summarizeData) <- sub("std","standarddeviation", names(summarizeData))
+names(summarizeData) <- sub("freq","frequency", names(summarizeData))
+names(summarizeData) <- sub("mag","magnitude", names(summarizeData))
+names(summarizeData) <- sub("gyro","gyroscope", names(summarizeData))
+
 
 # Write data set in file 'results.txt'
 write.table(summarizeData, file = "results.txt", row.names = F)
