@@ -1,10 +1,3 @@
----
-title: "codeBook.md"
-author: "Pablo Garcia Mugnoz"
-date: "Saturday, December 20, 2014"
-output: html_document
----
-
 ##Experimental design:
 The experiments have been carried out with a group of 30
 volunteers within an age bracket of 19-48 years. Each person performed six 

@@ -4,11 +4,13 @@
 # The file contains one function splitted in three sections.In parenthesis number
 # of task as explained in project.
 # Section 1: merging both data sets(1)
-# Section 2: extract measurements, add names to activities and labels to variables(2,3,4)
+# Section 2: extract measurements, add names to activities and labels to 
+# variables(2,3,4)
 # Section 3: extract average values(5)
+
+
 run_analysis <- function(){
 
-################################################################################
 # original data set must be stored in working directory saved with its original
 # name "UCI HAR Dataset"
 # load original data files
@@ -48,7 +50,7 @@ dataMergedSet <- cbind(subjectMergedSet,
 names(dataMergedSet) <- c("Subject", "Activity",
                           as.character(listOfVariables[,2]))
 
-######################################################################
+################################################################################
 # Extract require data from merged data set(task 2)
 # Check variavle names that contain mean and average values.
 containMean <- grep("mean",names(dataMergedSet))
@@ -62,21 +64,19 @@ containBoth <- sort( c(containMean,containStd))
 meanAndStdsDataSet <- dataMergedSet[,c(1:2,containBoth)]
 
 
-######################################################################
-# Summarizing  and standard deviation observations for each subject and 
+################################################################################
+# Summarizing  mean and standard deviation observations for each subject and 
 # activity (task 5)
 summarizeData <- aggregate(meanAndStdsDataSet[,3:81],
             list( 'Subject number' = meanAndStdsDataSet$Subject, 
                   'Activity performed'= meanAndStdsDataSet$Activity), mean)
 
-
+# Data is sorted first based on subject and next on activity.
 summarizeData <- summarizeData[order(summarizeData$'Subject number'),]
 summarizeData[,1] <- as.factor(summarizeData[,1])
 
-
+# Write data set in file 'results.txt'
 write.table(summarizeData, file = "results.txt", row.names = F)
 
-
-return(summarizeData)
 
 }
